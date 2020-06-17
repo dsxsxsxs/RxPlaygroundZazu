@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class IssueListViewCell: UITableViewCell {
+class IssueListViewCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var updatedAtLabel: UILabel!

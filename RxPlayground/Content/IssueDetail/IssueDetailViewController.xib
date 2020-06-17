@@ -13,6 +13,7 @@
                 <outlet property="hudView" destination="GPa-RR-pN6" id="ctv-rj-ksx"/>
                 <outlet property="issueTitleLabel" destination="Nc9-pd-hfb" id="Wri-5f-aTy"/>
                 <outlet property="updatedAtLabel" destination="5ng-rk-Ttg" id="uSM-Lx-uCk"/>
+                <outlet property="urlButton" destination="f6N-DW-zqJ" id="2kw-sL-cPc"/>
                 <outlet property="urlLabel" destination="iNj-hz-hxE" id="FZ5-hF-8Hu"/>
                 <outlet property="view" destination="z5n-xY-oeC" id="jdX-Dv-05b"/>
             </connections>

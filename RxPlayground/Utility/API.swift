@@ -84,3 +84,20 @@ struct API {
         return task
     }
 }
+
+import RxSwift
+extension API {
+    func connect<Request: RequestConfig>(config: Request) -> Single<Request.Response> {
+        Single.create { emitter in
+            let task = self.connect(config: config) {
+                switch $0 {
+                case .success(let response):
+                    emitter(.success(response))
+                case .failure(let error):
+                    emitter(.error(error))
+                }
+            }
+            return Disposables.create { task.cancel() }
+        }
+    }
+}
