@@ -49,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		0DE5F43CC0D99528803D0CAA /* Pods_RxPlaygroundTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxPlaygroundTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37311FCA249A306F0048B405 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		37311FCB249A31DD0048B405 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		37A4CA49249899AF00181E1C /* IssueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListViewController.swift; sourceTree = "<group>"; };
 		37A4CA4A249899AF00181E1C /* IssueListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueListViewController.xib; sourceTree = "<group>"; };
 		37A4CA4E249899F000181E1C /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +176,8 @@
 				37F29038249513A700E71B13 /* Products */,
 				DDC859C9C7DF4BFFD9E50059 /* Pods */,
 				31190EF398B1882557BB6A03 /* Frameworks */,
+				37311FCB249A31DD0048B405 /* LICENSE */,
+				37311FCA249A306F0048B405 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
