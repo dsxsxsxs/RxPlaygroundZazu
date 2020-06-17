@@ -7,25 +7,46 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-final class IssueListViewController: UITableViewController {
-        
+class IssueListViewController: UITableViewController {
+    private let issuesRelay = PublishRelay<[Issue]>()
+    private let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UINib(nibName: String(describing: IssueListViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: IssueListViewCell.self))
+        tableView.dataSource = nil
+        setupBindings()
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    private func setupBindings() {
+        issuesRelay
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(tableView.rx.items(
+                cellIdentifier: String(describing: IssueListViewCell.self),
+                cellType: IssueListViewCell.self)) { _, issue, cell in
+                cell.configure(entity: issue)
+            }
+            .disposed(by: disposeBag)
+
+        tableView.rx.modelSelected(Issue.self)
+            .subscribe(onNext: { [weak self] issue in
+                self?.navigationController?.pushViewController(IssueDetailViewController(number: issue.number), animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetch()
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        return cell
+    private func fetch() {
+        API().connect(config: IssueListRequest())
+            .asObservable()
+            .bind(to: issuesRelay)
+            .disposed(by: disposeBag)
     }
 }
