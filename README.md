@@ -6,4 +6,4 @@
 - 沒有做paging
 - 沒有架構，沒有MVVM
 - 沒有處理 http error
-- slide在repo裡
+- [slide在repo裡](https://github.com/dsxsxsxs/RxPlaygroundZazu/blob/master/RxSwiftBrrief.key)
