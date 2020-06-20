@@ -11,8 +11,8 @@ import RxSwift
 import RxCocoa
 
 class IssueListViewController: UITableViewController {
-    private let issuesRelay = PublishRelay<[Issue]>()
     private let disposeBag = DisposeBag()
+    private let viewModel = IssueListViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +22,7 @@ class IssueListViewController: UITableViewController {
     }
 
     private func setupBindings() {
-        issuesRelay
-            .asDriver(onErrorDriveWith: .empty())
+        viewModel.issues
             .drive(tableView.rx.items(
                 cellIdentifier: String(describing: IssueListViewCell.self),
                 cellType: IssueListViewCell.self)) { _, issue, cell in
@@ -40,13 +39,6 @@ class IssueListViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetch()
-    }
-
-    private func fetch() {
-        API().connect(config: IssueListRequest())
-            .asObservable()
-            .bind(to: issuesRelay)
-            .disposed(by: disposeBag)
+        viewModel.viewWillAppear()
     }
 }

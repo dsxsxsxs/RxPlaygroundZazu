@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37311FCE249E675A0048B405 /* IssueListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37311FCD249E675A0048B405 /* IssueListViewModel.swift */; };
+		37311FD0249E68EB0048B405 /* IssueDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37311FCF249E68EB0048B405 /* IssueDetailViewModel.swift */; };
 		37A4CA4B249899AF00181E1C /* IssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4CA49249899AF00181E1C /* IssueListViewController.swift */; };
 		37A4CA4C249899AF00181E1C /* IssueListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37A4CA4A249899AF00181E1C /* IssueListViewController.xib */; };
 		37A4CA50249899F000181E1C /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4CA4E249899F000181E1C /* IssueDetailViewController.swift */; };
@@ -51,6 +53,8 @@
 		0DE5F43CC0D99528803D0CAA /* Pods_RxPlaygroundTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxPlaygroundTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37311FCA249A306F0048B405 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		37311FCB249A31DD0048B405 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		37311FCD249E675A0048B405 /* IssueListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListViewModel.swift; sourceTree = "<group>"; };
+		37311FCF249E68EB0048B405 /* IssueDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewModel.swift; sourceTree = "<group>"; };
 		37A4CA49249899AF00181E1C /* IssueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListViewController.swift; sourceTree = "<group>"; };
 		37A4CA4A249899AF00181E1C /* IssueListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueListViewController.xib; sourceTree = "<group>"; };
 		37A4CA4E249899F000181E1C /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				37A4CA5A2498AAC300181E1C /* IssueListViewCell.xib */,
 				37A4CA49249899AF00181E1C /* IssueListViewController.swift */,
 				37A4CA4A249899AF00181E1C /* IssueListViewController.xib */,
+				37311FCD249E675A0048B405 /* IssueListViewModel.swift */,
 			);
 			path = IssueList;
 			sourceTree = "<group>";
@@ -148,6 +153,7 @@
 			children = (
 				37A4CA4E249899F000181E1C /* IssueDetailViewController.swift */,
 				37A4CA4F249899F000181E1C /* IssueDetailViewController.xib */,
+				37311FCF249E68EB0048B405 /* IssueDetailViewModel.swift */,
 			);
 			path = IssueDetail;
 			sourceTree = "<group>";
@@ -531,6 +537,8 @@
 				37F2903F249513A700E71B13 /* ViewController.swift in Sources */,
 				37F2903B249513A700E71B13 /* AppDelegate.swift in Sources */,
 				37A4CA582498A45100181E1C /* UIImageView+Extension.swift in Sources */,
+				37311FD0249E68EB0048B405 /* IssueDetailViewModel.swift in Sources */,
+				37311FCE249E675A0048B405 /* IssueListViewModel.swift in Sources */,
 				37A4CA4B249899AF00181E1C /* IssueListViewController.swift in Sources */,
 				37A4CA562498A3E100181E1C /* Config.swift in Sources */,
 				37A4CA50249899F000181E1C /* IssueDetailViewController.swift in Sources */,

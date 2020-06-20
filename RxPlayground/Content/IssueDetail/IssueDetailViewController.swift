@@ -12,7 +12,7 @@ import RxSwift
 import RxRelay
 
 final class IssueDetailViewController: UIViewController {
-    static let dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         return df
@@ -27,11 +27,12 @@ final class IssueDetailViewController: UIViewController {
     @IBOutlet private weak var hudView: UIView!
 
     private let issueNumber: Int
-    private let issueRelay = PublishRelay<Issue>()
     private let disposeBag = DisposeBag()
+    private let viewModel: IssueDetailViewModel
 
     init(number: Int) {
         issueNumber = number
+        viewModel = .init(number: number)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,11 +43,11 @@ final class IssueDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBindings()
-        fetch()
+        viewModel.viewDidLoad()
     }
 
     private func setupBindings() {
-        issueRelay
+        viewModel.issue
             .asDriver(onErrorDriveWith: .empty())
             .drive(onNext: { [weak self] in
                 self?.configureUI(entity: $0)
@@ -59,13 +60,6 @@ final class IssueDetailViewController: UIViewController {
             .subscribe(onNext: {[weak self] in
                 self?.navigationController?.pushViewController(SFSafariViewController(url: $0), animated: true)
             })
-            .disposed(by: disposeBag)
-    }
-
-    private func fetch() {
-        API().connect(config: IssueDetailRequest(number: issueNumber))
-            .asObservable()
-            .bind(to: issueRelay)
             .disposed(by: disposeBag)
     }
 
