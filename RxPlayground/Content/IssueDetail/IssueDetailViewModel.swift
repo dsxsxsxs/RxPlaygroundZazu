@@ -9,17 +9,28 @@ import RxSwift
 import RxCocoa
 
 final class IssueDetailViewModel {
-    private let issueRelay = PublishRelay<Issue>()
+    private let issueResultRelay = PublishRelay<Result<Issue, Error>>()
     private let fetchTrigger = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     var issue: Driver<Issue> {
-        issueRelay.asDriver(onErrorDriveWith: .empty())
+        issueResultRelay
+            .compactMap { $0.value }
+            .asDriver(onErrorDriveWith: .empty())
+    }
+    var error: Signal<Error> {
+        issueResultRelay
+            .compactMap { $0.error }
+            .asSignal(onErrorSignalWith: .empty())
     }
 
     init(number: Int) {
         fetchTrigger
-            .flatMapFirst { API().connect(config: IssueDetailRequest(number: number)) }
-            .bind(to: issueRelay)
+            .flatMapFirst {
+                API().connect(config: IssueDetailRequest(number: number))
+                    .map { .success($0) }
+                    .catchError { .just(.failure($0)) }
+            }
+            .bind(to: issueResultRelay)
             .disposed(by: disposeBag)
     }
 
@@ -27,7 +38,30 @@ final class IssueDetailViewModel {
         fetch()
     }
 
+    func didRequestForRetry() {
+        fetch()
+    }
+
     private func fetch() {
         fetchTrigger.accept(())
+    }
+}
+
+extension Result {
+    var value: Success? {
+        switch self {
+        case .success(let value):
+            return value
+        case .failure:
+            return nil
+        }
+    }
+    var error: Error? {
+        switch self {
+        case .success:
+            return nil
+        case .failure(let error):
+            return error
+        }
     }
 }

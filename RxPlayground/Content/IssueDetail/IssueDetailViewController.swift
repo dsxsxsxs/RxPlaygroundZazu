@@ -48,9 +48,20 @@ final class IssueDetailViewController: UIViewController {
 
     private func setupBindings() {
         viewModel.issue
-            .asDriver(onErrorDriveWith: .empty())
             .drive(onNext: { [weak self] in
                 self?.configureUI(entity: $0)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.error
+            .emit(onNext: {[weak self] _ in
+                let alert = UIAlertController(title: "An error occured", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in
+                }))
+                alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                    self?.viewModel.didRequestForRetry()
+                }))
+                self?.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 
