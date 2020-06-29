@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class IssueListViewModel {
-    private let issueListUseCase = IssueListUseCase(repository: .init())
+    private let issueListUseCase = IssueListUseCase(repository: IssueListRepository())
     let issues: Driver<[Issue]>
 
     init() {

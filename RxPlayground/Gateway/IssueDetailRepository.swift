@@ -18,7 +18,7 @@ private struct IssueDetailRequest: DecodableRequestConfig {
     }
 }
 
-struct IssueDetailRepository {
+struct IssueDetailRepository: IssueDetailRepositoryProtocol {
     func fetch(number: Int) -> Single<Issue> {
         API().connect(config: IssueDetailRequest(number: number))
     }

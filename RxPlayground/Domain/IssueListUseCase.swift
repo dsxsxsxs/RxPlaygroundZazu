@@ -9,11 +9,15 @@
 import RxSwift
 import RxRelay
 
+protocol IssueListRepositoryProtocol {
+    func fetch() -> Single<[Issue]>
+}
+
 final class IssueListUseCase {
     private let fetchTrigger = PublishRelay<Void>()
     let issues: Observable<[Issue]>
 
-    init(repository: IssueListRepository) {
+    init(repository: IssueListRepositoryProtocol) {
         issues = fetchTrigger.flatMapFirst {
             repository.fetch()
         }

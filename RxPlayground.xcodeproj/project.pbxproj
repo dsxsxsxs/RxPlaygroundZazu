@@ -169,6 +169,7 @@
 		37A4CA5D2498AC9100181E1C /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				37A4CA5F2498AD5D00181E1C /* IssueObjects.swift */,
 				37D07F0224AA29ED008D3C83 /* IssueListUseCase.swift */,
 				37D07F0424AA29FB008D3C83 /* IssueDetailUseCase.swift */,
 			);
@@ -185,7 +186,6 @@
 		37D07EFA24AA26A9008D3C83 /* Gateway */ = {
 			isa = PBXGroup;
 			children = (
-				37A4CA5F2498AD5D00181E1C /* IssueObjects.swift */,
 				37D07EFE24AA2710008D3C83 /* IssueListRepository.swift */,
 				37D07F0024AA2725008D3C83 /* IssueDetailRepository.swift */,
 			);

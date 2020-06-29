@@ -10,7 +10,7 @@ import RxCocoa
 
 final class IssueDetailViewModel {
     private let issueResultRelay = PublishRelay<Result<Issue, Error>>()
-    private let issueDetailUseCase = IssueDetailUseCase(repository: .init())
+    private let issueDetailUseCase = IssueDetailUseCase(repository: IssueDetailRepository())
     private let disposeBag = DisposeBag()
     private let number: Int
     var issue: Driver<Issue> {
