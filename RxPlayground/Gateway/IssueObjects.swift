@@ -28,26 +28,4 @@ struct Issue: Decodable {
         case url = "html_url"
         case updatedAt = "updated_at"
     }
-
-}
-
-struct IssueListRequest: DecodableRequestConfig {
-    typealias Response = [Issue]
-    var urlRequest: URLRequest {
-        var request = URLRequest(url: URL(string: "https://api.github.com/repos/Carthage/Carthage/issues?filter=all&page=1")!)
-        request.httpMethod = "GET"
-        return request
-    }
-}
-
-struct IssueDetailRequest: DecodableRequestConfig {
-    typealias Response = Issue
-    let urlRequest: URLRequest
-
-    init(number: Int) {
-        var request = URLRequest(url: URL(string: "https://api.github.com/repos/Carthage/Carthage/issues/\(number)")!)
-        request.httpMethod = "GET"
-        self.urlRequest = request
-    }
-
 }

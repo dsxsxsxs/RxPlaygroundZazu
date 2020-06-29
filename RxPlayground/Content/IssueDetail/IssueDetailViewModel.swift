@@ -26,7 +26,7 @@ final class IssueDetailViewModel {
     init(number: Int) {
         fetchTrigger
             .flatMapFirst {
-                API().connect(config: IssueDetailRequest(number: number))
+                IssueDetailRepository().fetch(number: number)
                     .map { .success($0) }
                     .catchError { .just(.failure($0)) }
             }
