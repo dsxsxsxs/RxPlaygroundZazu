@@ -19,7 +19,7 @@ final class IssueListViewModel {
 
     init() {
         fetchTrigger
-            .flatMapFirst { IssueListRepository().fetch() }
+            .flatMapFirst { IssueListUseCase().fetch() }
             .bind(to: issuesRelay)
             .disposed(by: disposeBag)
     }
