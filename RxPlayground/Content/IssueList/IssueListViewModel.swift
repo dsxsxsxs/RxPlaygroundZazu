@@ -10,18 +10,11 @@ import RxSwift
 import RxCocoa
 
 final class IssueListViewModel {
-    private let issuesRelay = PublishRelay<[Issue]>()
-    private let fetchTrigger = PublishRelay<Void>()
-    private let disposeBag = DisposeBag()
-    var issues: Driver<[Issue]> {
-        issuesRelay.asDriver(onErrorDriveWith: .empty())
-    }
+    private let issueListUseCase = IssueListUseCase(repository: .init())
+    let issues: Driver<[Issue]>
 
     init() {
-        fetchTrigger
-            .flatMapFirst { IssueListUseCase().fetch() }
-            .bind(to: issuesRelay)
-            .disposed(by: disposeBag)
+        issues = issueListUseCase.issues.asDriver(onErrorDriveWith: .empty())
     }
 
     func viewWillAppear() {
@@ -29,6 +22,6 @@ final class IssueListViewModel {
     }
 
     private func fetch() {
-        fetchTrigger.accept(())
+        issueListUseCase.fetch()
     }
 }

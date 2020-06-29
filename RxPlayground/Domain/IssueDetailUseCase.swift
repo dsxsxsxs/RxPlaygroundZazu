@@ -7,10 +7,21 @@
 //
 
 import RxSwift
+import RxRelay
 
 final class IssueDetailUseCase {
+    private let fetchTrigger = PublishRelay<Int>()
+    let issues: Observable<Result<Issue, Error>>
 
-    func fetch(number: Int) -> Single<Issue> {
-        IssueDetailRepository().fetch(number: number)
+    init(repository: IssueDetailRepository) {
+        issues = fetchTrigger.flatMapLatest {
+            repository.fetch(number: $0)
+                .map { .success($0) }
+                .catchError { .just(.failure($0)) }
+        }
+    }
+
+    func fetch(number: Int) {
+        fetchTrigger.accept(number)
     }
 }

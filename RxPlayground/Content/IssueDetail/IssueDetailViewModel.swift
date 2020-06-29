@@ -10,8 +10,9 @@ import RxCocoa
 
 final class IssueDetailViewModel {
     private let issueResultRelay = PublishRelay<Result<Issue, Error>>()
-    private let fetchTrigger = PublishRelay<Void>()
+    private let issueDetailUseCase = IssueDetailUseCase(repository: .init())
     private let disposeBag = DisposeBag()
+    private let number: Int
     var issue: Driver<Issue> {
         issueResultRelay
             .compactMap { $0.value }
@@ -24,12 +25,8 @@ final class IssueDetailViewModel {
     }
 
     init(number: Int) {
-        fetchTrigger
-            .flatMapFirst {
-                IssueDetailUseCase().fetch(number: number)
-                    .map { .success($0) }
-                    .catchError { .just(.failure($0)) }
-            }
+        self.number = number
+        issueDetailUseCase.issues
             .bind(to: issueResultRelay)
             .disposed(by: disposeBag)
     }
@@ -43,7 +40,7 @@ final class IssueDetailViewModel {
     }
 
     private func fetch() {
-        fetchTrigger.accept(())
+        issueDetailUseCase.fetch(number: number)
     }
 }
 
