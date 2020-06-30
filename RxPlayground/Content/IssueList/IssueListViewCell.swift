@@ -14,11 +14,11 @@ class IssueListViewCell: UITableViewCell {
     @IBOutlet private weak var updatedAtLabel: UILabel!
     @IBOutlet private weak var avatarImageView: UIImageView!
 
-    func configure(entity: Issue) {
-        titleLabel.text = entity.title
-        updatedAtLabel.text = dateToString(entity.updatedAt)
-        nameLabel.text = entity.user.login
-        avatarImageView.image(from: entity.user.avatarURL)
+    func configure(viewData: IssueListViewModel.ViewData) {
+        titleLabel.text = viewData.title
+        updatedAtLabel.text = dateToString(viewData.updatedAt)
+        nameLabel.text = viewData.name
+        avatarImageView.image(from: viewData.avatarURL)
     }
 
     private func dateToString(_ date: Date) -> String {

@@ -12,7 +12,7 @@ import RxSwift
 import RxRelay
 
 final class IssueDetailViewController: UIViewController {
-    static let dateFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         return df
@@ -26,12 +26,11 @@ final class IssueDetailViewController: UIViewController {
     @IBOutlet private weak var bodyTextView: UITextView!
     @IBOutlet private weak var hudView: UIView!
 
-    private let issueNumber: Int
-    private let issueRelay = PublishRelay<Issue>()
     private let disposeBag = DisposeBag()
+    private let viewModel: IssueDetailViewModel
 
     init(number: Int) {
-        issueNumber = number
+        viewModel = .init(number: number)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,14 +41,25 @@ final class IssueDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBindings()
-        fetch()
+        viewModel.viewDidLoad()
     }
 
     private func setupBindings() {
-        issueRelay
-            .asDriver(onErrorDriveWith: .empty())
+        viewModel.issue
             .drive(onNext: { [weak self] in
-                self?.configureUI(entity: $0)
+                self?.configureUI(viewData: $0)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.error
+            .emit(onNext: {[weak self] _ in
+                let alert = UIAlertController(title: "An error occured", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in
+                }))
+                alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                    self?.viewModel.didRequestForRetry()
+                }))
+                self?.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 
@@ -62,21 +72,11 @@ final class IssueDetailViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func fetch() {
-        API().connect(config: IssueDetailRequest(number: issueNumber))
-            .asObservable()
-            .bind(to: issueRelay)
-            .disposed(by: disposeBag)
-    }
-
-    private func configureUI(entity: Issue) {
+    private func configureUI(viewData: IssueDetailViewModel.ViewData) {
         hudView.isHidden = true
-        issueTitleLabel.text = entity.title
-        updatedAtLabel.text = Self.dateFormatter.string(from: entity.updatedAt)
-        urlLabel.text = entity.url.absoluteString
-        bodyTextView.text = entity.body
-    }
-
-    @IBAction private func didTapURLButton(sender: UIButton) {
+        issueTitleLabel.text = viewData.title
+        updatedAtLabel.text = Self.dateFormatter.string(from: viewData.updatedAt)
+        urlLabel.text = viewData.url.absoluteString
+        bodyTextView.text = viewData.body
     }
 }
