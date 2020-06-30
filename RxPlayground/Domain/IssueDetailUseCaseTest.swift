@@ -26,7 +26,7 @@ class IssueDetailUseCaseTest: XCTestCase {
 
         let useCase = IssueDetailUseCase(repository: repository)
         let resultObserver = scheduler.createObserver(ObservedResult.self)
-        _ = useCase.issues.map {
+        _ = useCase.issue.map {
             switch $0 {
             case .success(let issue):
                 return .success(issue)
