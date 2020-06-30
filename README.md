@@ -1,6 +1,8 @@
 #  Carthage Repo Issue Viewer
 
 - 2020-06-16 at ios@Taipei
+- 2020-06-30 at ios@Taipei
+
 - demo Rx用的小sample
 - 談 Clean Architecture用的小sample
 - 需要提供 `Config.swift` 裡的token。
