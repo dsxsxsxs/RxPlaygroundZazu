@@ -15,10 +15,10 @@ protocol IssueDetailRepositoryProtocol {
 
 final class IssueDetailUseCase {
     private let fetchTrigger = PublishRelay<Int>()
-    let issues: Observable<Result<Issue, Error>>
+    let issue: Observable<Result<Issue, Error>>
 
     init(repository: IssueDetailRepositoryProtocol) {
-        issues = fetchTrigger.flatMapLatest {
+        issue = fetchTrigger.flatMapLatest {
             repository.fetch(number: $0)
                 .map { .success($0) }
                 .catchError { .just(.failure($0)) }

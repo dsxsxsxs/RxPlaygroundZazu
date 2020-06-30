@@ -26,12 +26,10 @@ final class IssueDetailViewController: UIViewController {
     @IBOutlet private weak var bodyTextView: UITextView!
     @IBOutlet private weak var hudView: UIView!
 
-    private let issueNumber: Int
     private let disposeBag = DisposeBag()
     private let viewModel: IssueDetailViewModel
 
     init(number: Int) {
-        issueNumber = number
         viewModel = .init(number: number)
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,7 +47,7 @@ final class IssueDetailViewController: UIViewController {
     private func setupBindings() {
         viewModel.issue
             .drive(onNext: { [weak self] in
-                self?.configureUI(entity: $0)
+                self?.configureUI(viewData: $0)
             })
             .disposed(by: disposeBag)
 
@@ -74,14 +72,11 @@ final class IssueDetailViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func configureUI(entity: Issue) {
+    private func configureUI(viewData: IssueDetailViewModel.ViewData) {
         hudView.isHidden = true
-        issueTitleLabel.text = entity.title
-        updatedAtLabel.text = Self.dateFormatter.string(from: entity.updatedAt)
-        urlLabel.text = entity.url.absoluteString
-        bodyTextView.text = entity.body
-    }
-
-    @IBAction private func didTapURLButton(sender: UIButton) {
+        issueTitleLabel.text = viewData.title
+        updatedAtLabel.text = Self.dateFormatter.string(from: viewData.updatedAt)
+        urlLabel.text = viewData.url.absoluteString
+        bodyTextView.text = viewData.body
     }
 }

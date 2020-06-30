@@ -26,11 +26,11 @@ class IssueListViewController: UITableViewController {
             .drive(tableView.rx.items(
                 cellIdentifier: String(describing: IssueListViewCell.self),
                 cellType: IssueListViewCell.self)) { _, issue, cell in
-                cell.configure(entity: issue)
+                cell.configure(viewData: issue)
             }
             .disposed(by: disposeBag)
 
-        tableView.rx.modelSelected(Issue.self)
+        tableView.rx.modelSelected(IssueListViewModel.ViewData.self)
             .subscribe(onNext: { [weak self] issue in
                 self?.navigationController?.pushViewController(IssueDetailViewController(number: issue.number), animated: true)
             })
