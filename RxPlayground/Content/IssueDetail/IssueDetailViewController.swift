@@ -64,7 +64,7 @@ final class IssueDetailViewController: UIViewController {
             .disposed(by: disposeBag)
 
         urlButton.rx.tap
-            .withLatestFrom(Observable.just(self)) { $1.urlLabel.text }
+            .withLatestFrom(Observable.just(self.urlLabel)) { $1?.text }
             .compactMap { $0.flatMap(URL.init) }
             .subscribe(onNext: {[weak self] in
                 self?.navigationController?.pushViewController(SFSafariViewController(url: $0), animated: true)
